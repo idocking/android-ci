@@ -7,12 +7,11 @@ ENV PATH "$PATH:${ANDROID_HOME}/tools"
 ENV DEBIAN_FRONTEND noninteractive
 
 ## For chinese user
-## RUN sed -i "s/http:\/\/archive\.ubuntu\.com/http:\/\/mirrors\.aliyun\.com/g" /etc/apt/sources.list
+# RUN sed -i "s/http:\/\/archive\.ubuntu\.com/http:\/\/mirrors\.aliyun\.com/g" /etc/apt/sources.list
 
 RUN apt-get -qq update && \
-    apt-get install -qqy --no-install-recommends \
+    apt-get install -y --no-install-recommends \
       bzip2 \
-      curl \
       git-core \
       html2text \
       openjdk-8-jdk \
@@ -27,7 +26,7 @@ RUN apt-get -qq update && \
 RUN rm -f /etc/ssl/certs/java/cacerts; \
     /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
-RUN curl -s https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip > /sdk.zip && \
+RUN wget -q https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip -O /sdk.zip && \
     unzip /sdk.zip -d /sdk && \
     rm -v /sdk.zip
 
